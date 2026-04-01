@@ -1,7 +1,6 @@
-
-
+import { applicationConfig } from "./src/constant.js";
 import app from "./src/app.js";
-import { applicationConstants } from "./src/constants.js";
-app.listen(applicationConstants.port, () => {
-  console.log("Server is running on port 3000");
+
+app.listen(applicationConfig.PORT, () => {
+  console.log(`Server is running on port ${applicationConfig.PORT}`);
 });

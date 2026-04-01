@@ -1,12 +1,16 @@
-export type CreateUserBody = {
+export type User = {
+    email: string;
+    password: string;
     firstName: string;
     lastName: string;
     phone: string;
-    email: string;
-    password: string;
+    isVerified?: boolean;
+    profilePicture?: string | null;
+    bio?: string;
+    eventsOfInterest?: string;
 };
 
-export type LoginUserBody = {
+export type LoginUser = {
     email: string;
     password: string;
 };

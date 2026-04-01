@@ -1,8 +1,20 @@
 import { Router } from "express";
-import { createUserController, loginUserController } from "../controllers/user.controllers.js";
+import {  createUserController, deleteUserController, forgetPasswordController, getUserController, loginUserController, resendOtpController, resetPasswordController, updateUserController, verifyOtpController } from "../controllers/user.controllers.js";
+import { AuthHandler } from "../middlewares/AuthHandler.js";
+import { upload } from "../config/fileUpload.js";
 
-const userRoutes = Router();
 
-userRoutes.post("/", createUserController);
-userRoutes.post("/login", loginUserController);
-export default userRoutes;
+const router = Router();
+
+router.post("/register", createUserController);
+router.post("/login", loginUserController);
+router.post("/forget-password", forgetPasswordController);
+router.post("/verify-otp", verifyOtpController);
+router.post("/resend-otp", resendOtpController);
+router.post("/reset-password", resetPasswordController);
+
+router.use(AuthHandler);
+router.delete("/delete-user", deleteUserController);
+router.get("/get-auth-user", getUserController);
+router.put("/update-user", upload.single("avatar"), updateUserController);
+export default router;
