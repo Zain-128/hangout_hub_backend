@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  createUserController, deleteUserController, forgetPasswordController, getUserController, loginUserController, resendOtpController, resetPasswordController, updateUserController, verifyOtpController } from "../controllers/user.controllers.js";
+import {  changePasswordController, createUserController, deleteUserController, forgetPasswordController, getUserController, loginUserController, resendOtpController, resetPasswordController, updateUserController, verifyOtpController } from "../controllers/user.controllers.js";
 import { AuthHandler } from "../middlewares/AuthHandler.js";
 import { upload } from "../config/fileUpload.js";
 
@@ -16,5 +16,6 @@ router.post("/reset-password", resetPasswordController);
 router.use(AuthHandler);
 router.delete("/delete-user", deleteUserController);
 router.get("/get-auth-user", getUserController);
+router.put("/change-password",  changePasswordController);
 router.put("/update-user", upload.single("avatar"), updateUserController);
 export default router;

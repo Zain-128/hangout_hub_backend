@@ -242,7 +242,9 @@ export const resetPasswordController = AsyncHandler(async (req: Request, res: Re
         });
     }
 
+
     const hashedPassword = await hashPassword(password);
+
     const updatedUser = await updateUserService(user.id, { password: hashedPassword });
     if(!updatedUser){
         return next({
@@ -256,6 +258,33 @@ export const resetPasswordController = AsyncHandler(async (req: Request, res: Re
     return SuccessHandler(res, {}, "Password reset successfully", "200");
 });
 
+export const changePasswordController = AsyncHandler(async (req: Request, res: Response , next: NextFunction) => {
+    
+    const { oldPassword, newPassword } = req.body as { oldPassword: string, newPassword: string };
+   
+    const user = (req as any).user as { id: string , email: string , firstName: string , lastName: string , phone: string  };
+    const currentUser = await getUserById(user.id);
+    const isOldPasswordValid = await comparePassword(oldPassword, (currentUser as User).password);
+    if(!isOldPasswordValid){
+        return next({
+            statusCode: 400,
+            message: "Invalid old password",
+            stack: new Error().stack,
+            status: "400",
+        });
+    }
+    const hashedPassword = await hashPassword(newPassword);
+    const updatedUser = await updateUserService(user.id, { password: hashedPassword });
+    if(!updatedUser){
+        return next({
+            statusCode: 400,
+            message: "Failed to change password",
+            stack: new Error().stack,
+            status: "400",
+        });
+    }
+    return SuccessHandler(res, {}, "Password changed successfully", "200");
+});
 
 export const updateUserController = AsyncHandler(async (req: Request, res: Response , next: NextFunction) => {
 
