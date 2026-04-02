@@ -288,8 +288,10 @@ export const changePasswordController = AsyncHandler(async (req: Request, res: R
 
 export const updateUserController = AsyncHandler(async (req: Request, res: Response , next: NextFunction) => {
 
-   const profilePicture = req.file?.filename ? `${process.env.BASE_URL}/uploads/${req.file.filename}` : null;
+   const profilePicture = req.file?.filename ? `${process.env.BASE_URL}/${req.file.filename}` : null;
     
+
+
     const { firstName, lastName, phone, bio, eventsOfInterest } = req.body as { firstName: string, lastName: string, phone: string, bio: string, eventsOfInterest: string };
     const user = (req as any).user as { id: string , email: string , firstName: string , lastName: string , phone: string };
     const updatedUser = await updateUserService(user.id, { firstName, lastName, phone , profilePicture, bio, eventsOfInterest});

@@ -27,7 +27,8 @@ model User {
   eventsOfInterest String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  adminOfGroups Group[] @relation("GroupAdmins")
+  memberOfGroups Group[] @relation("GroupMembers")
 }
 
 model Otp{
@@ -37,3 +38,24 @@ model Otp{
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
+
+
+
+
+// Group Schema 
+model Group {
+    id String @id @default(uuid())
+    name String
+    description String
+    category String
+    image String
+    admins User[] @relation("GroupAdmins")
+    members User[] @relation("GroupMembers")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+
+// Post Schema 
+
+

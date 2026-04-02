@@ -17,5 +17,5 @@ router.use(AuthHandler);
 router.delete("/delete-user", deleteUserController);
 router.get("/get-auth-user", getUserController);
 router.put("/change-password",  changePasswordController);
-router.put("/update-user", upload.single("avatar"), updateUserController);
+router.put("/update-user", upload.single("profilePicture"), updateUserController);
 export default router;
