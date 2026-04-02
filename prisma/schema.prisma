@@ -28,6 +28,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   adminOfGroups Group[] @relation("GroupAdmins")
+  joinRequests JoinRequest[]
   memberOfGroups Group[] @relation("GroupMembers")
 }
 
@@ -51,11 +52,22 @@ model Group {
     image String
     admins User[] @relation("GroupAdmins")
     members User[] @relation("GroupMembers")
+    joinRequests JoinRequest[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
-
+// Join Requests Schema 
+model JoinRequest {
+    id String @id @default(uuid())
+    userId String
+    groupId String
+    status String //pending , accepted , rejected
+    user User @relation(fields: [userId], references: [id])
+    group Group @relation(fields: [groupId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+} 
 // Post Schema 
 
 
