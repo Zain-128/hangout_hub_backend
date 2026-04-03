@@ -187,7 +187,7 @@ export const verifyOtpController = AsyncHandler(async (req: Request, res: Respon
 
     await deleteOtpService(email);
     return SuccessHandler(res, {
-        token : type === "reset" ? await generateToken({
+        token : type === "register" ? await generateToken({
             id : user.id,
             email : user.email,
             firstName : user.firstName,
